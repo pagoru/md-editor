@@ -1,0 +1,17 @@
+{
+  "name": "MdEditor",
+  "version": "1.0.0",
+  "description": "Simple markdown editor",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dbackowski/md-editor.git"
+  },
+  "author": "Damian Baćkowski",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.9"
+  }
+}

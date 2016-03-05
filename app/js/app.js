@@ -41,4 +41,18 @@ $(document).ready(function() {
   editor.on('change', update);
 
   markdownRender(document.getElementById('input').value);
+
+  var electron = require('electron');
+
+  electron.ipcRenderer.on('new-file', function(event, message) {
+    editor.setValue('');
+  });
+
+  electron.ipcRenderer.on('load-file', function(event, message) {
+    editor.setValue(message);
+  });
+
+  electron.ipcRenderer.on('get-editor-content', function(event, message) {
+    electron.ipcRenderer.send('editor-content', editor.getValue());
+  });
 });

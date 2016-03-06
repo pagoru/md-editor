@@ -9,23 +9,26 @@ const fs = require('fs');
 const ipcMain = require('electron').ipcMain;
 
 let mainWindow;
+let fileName;
 
 const mainMenu = Menu.buildFromTemplate([{}, {
   label: 'File',
   submenu: [
   {
     label: 'New File',
-    click: function() {
-      mainWindow.webContents.send('new-file');
-    }
+    click: newFileHandler
   },
   {
     label: 'Open File',
     click: openFileHandler
   },
   {
-    label: 'Save As',
+    label: 'Save',
     click: saveFileHandler
+  },
+  {
+    label: 'Save As',
+    click: saveAsFileHandler
   },
   {
     type: 'separator'
@@ -33,19 +36,36 @@ const mainMenu = Menu.buildFromTemplate([{}, {
   {
     label: 'Quit',
     accelerator: 'Command+Q',
-    click: function() {
-      app.quit();
-    }
+    click: quitProgramHandler
   }]
 }]);
+
+function newFileHandler() {
+  mainWindow.webContents.send('new-file');
+  disableSaveMenuPosition();
+}
 
 function openFileHandler () {
   dialog.showOpenDialog({ filters: [{ name: 'markdown', extensions: ['md'] }]}, function (fileNames) {
     if (fileNames === undefined) return;
-    var fileName = fileNames[0];
+    fileName = fileNames[0];
     fs.readFile(fileName, 'utf-8', function (err, data) {
       mainWindow.webContents.send('load-file', data);
+      enableSaveMenuPosition();
     });
+  });
+}
+
+function saveAsFileHandler() {
+  mainWindow.webContents.send('get-editor-content');
+
+  ipcMain.once('editor-content', function(event, arg) {
+    fileName = dialog.showSaveDialog();
+
+    if (fileName !== undefined) {
+      fs.writeFile(fileName, arg);
+      enableSaveMenuPosition();
+    }
   });
 }
 
@@ -53,12 +73,20 @@ function saveFileHandler() {
   mainWindow.webContents.send('get-editor-content');
 
   ipcMain.once('editor-content', function(event, arg) {
-    let fileName = dialog.showSaveDialog();
-
-    if (fileName !== undefined) {
-      fs.writeFile(fileName, arg);
-    }
+    fs.writeFile(fileName, arg);
   });
+}
+
+function quitProgramHandler() {
+  app.quit();
+}
+
+function disableSaveMenuPosition() {
+  mainMenu.items[1].submenu.items[2].enabled = false;
+}
+
+function enableSaveMenuPosition() {
+  mainMenu.items[1].submenu.items[2].enabled = true;
 }
 
 function createMainWindow() {
@@ -66,6 +94,7 @@ function createMainWindow() {
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   mainWindow.maximize();
 
+  disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);
 
   mainWindow.on('closed', function() {

@@ -7,6 +7,7 @@ const Menu = require('menu');
 const dialog = require('dialog');
 const fs = require('fs');
 const ipcMain = require('electron').ipcMain;
+const convertFactory = require('electron-html-to');
 
 let mainWindow;
 let fileName;
@@ -29,6 +30,10 @@ const mainMenu = Menu.buildFromTemplate([{}, {
   {
     label: 'Save As',
     click: saveAsFileHandler
+  },
+  {
+    label: 'Export As PDF',
+    click: exportAsPdfHandler
   },
   {
     type: 'separator'
@@ -74,6 +79,43 @@ function saveFileHandler() {
 
   ipcMain.once('editor-content', function(event, arg) {
     fs.writeFile(fileName, arg);
+  });
+}
+
+function exportAsPdfHandler() {
+  mainWindow.webContents.send('get-output-content');
+
+  ipcMain.once('output-content', function(event, arg) {
+    let pdfFileName = dialog.showSaveDialog();
+
+    if (pdfFileName !== undefined) {
+      let conversion = convertFactory({
+        converterPath: convertFactory.converters.PDF
+      });
+
+      let html_body = `<html>
+                        <head>
+                          <style>
+                            ${fs.readFileSync(__dirname + '/app/css/codemirror.css').toString()}
+                            ${fs.readFileSync(__dirname + '/app/css/monokai.css').toString()}
+                            ${fs.readFileSync(__dirname + '/app/css/default.css').toString()}
+                            ${fs.readFileSync(__dirname + '/app/css/design.css').toString()}
+                          </style>
+                        </head>
+                        <body>
+                          ${arg}
+                        </body>
+                      </html>`;
+
+      conversion({ html: html_body }, function(err, result) {
+        if (err) {
+          return dialog.showErrorBox('Unable to export as PDF', err);
+        }
+
+        result.stream.pipe(fs.createWriteStream(pdfFileName));
+        conversion.kill();
+      });
+    }
   });
 }
 

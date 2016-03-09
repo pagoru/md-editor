@@ -55,4 +55,8 @@ $(document).ready(function() {
   electron.ipcRenderer.on('get-editor-content', function(event, message) {
     electron.ipcRenderer.send('editor-content', editor.getValue());
   });
+
+  electron.ipcRenderer.on('get-output-content', function(event, message) {
+    electron.ipcRenderer.send('output-content', document.getElementById('right').innerHTML);
+  });
 });

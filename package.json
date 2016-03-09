@@ -12,6 +12,7 @@
   "author": "Damian Baćkowski",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "^0.36.9"
+    "electron-prebuilt": "^0.36.9",
+    "jspdf": "^1.2.61"
   }
 }

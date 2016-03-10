@@ -15,35 +15,74 @@ let fileName;
 const mainMenu = Menu.buildFromTemplate([{}, {
   label: 'File',
   submenu: [
+    {
+      label: 'New File',
+      click: newFileHandler
+    },
+    {
+      label: 'Open File',
+      click: openFileHandler
+    },
+    {
+      label: 'Save',
+      click: saveFileHandler
+    },
+    {
+      label: 'Save As',
+      click: saveAsFileHandler
+    },
+    {
+      label: 'Export As PDF',
+      click: exportAsPdfHandler
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Quit',
+      accelerator: 'Command+Q',
+      click: quitProgramHandler
+    }
+  ]},
   {
-    label: 'New File',
-    click: newFileHandler
-  },
-  {
-    label: 'Open File',
-    click: openFileHandler
-  },
-  {
-    label: 'Save',
-    click: saveFileHandler
-  },
-  {
-    label: 'Save As',
-    click: saveAsFileHandler
-  },
-  {
-    label: 'Export As PDF',
-    click: exportAsPdfHandler
-  },
-  {
-    type: 'separator'
-  },
-  {
-    label: 'Quit',
-    accelerator: 'Command+Q',
-    click: quitProgramHandler
-  }]
-}]);
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'Command+Z',
+        selector: 'undo:'
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Shift+Command+Z',
+        selector: 'redo:'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Cut',
+        accelerator: 'Command+X',
+        selector: 'cut:'
+      },
+      {
+        label: 'Copy',
+        accelerator: 'Command+C',
+        selector: 'copy:'
+      },
+      {
+        label: 'Paste',
+        accelerator: 'Command+V',
+        selector: 'paste:'
+      },
+      {
+        label: 'Select All',
+        accelerator: 'Command+A',
+        selector: 'selectAll:'
+      }
+    ]
+  }
+]);
 
 function newFileHandler() {
   mainWindow.webContents.send('new-file');
@@ -134,7 +173,7 @@ function enableSaveMenuPosition() {
 function createMainWindow() {
   mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor'});
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
-  mainWindow.maximize();
+  //mainWindow.maximize();
 
   disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);

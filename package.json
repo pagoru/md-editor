@@ -2,8 +2,10 @@
   "name": "MdEditor",
   "version": "1.0.0",
   "description": "Simple markdown editor",
+  "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "build": "electron-packager ./ --platform=darwin,linux --icon=./app/images/icon --arch=x64 --version=0.36.9"
   },
   "repository": {
     "type": "git",
@@ -12,6 +14,7 @@
   "author": "Damian Baćkowski",
   "license": "MIT",
   "devDependencies": {
+    "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.9",
     "jspdf": "^1.2.61"
   }

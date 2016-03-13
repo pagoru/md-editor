@@ -17,14 +17,17 @@ const mainMenu = Menu.buildFromTemplate([{}, {
   submenu: [
     {
       label: 'New File',
+      accelerator: 'CmdOrCtrl+N',
       click: newFileHandler
     },
     {
       label: 'Open File',
+      accelerator: 'CmdOrCtrl+O',
       click: openFileHandler
     },
     {
       label: 'Save',
+      accelerator: 'CmdOrCtrl+S',
       click: saveFileHandler
     },
     {
@@ -40,7 +43,7 @@ const mainMenu = Menu.buildFromTemplate([{}, {
     },
     {
       label: 'Quit',
-      accelerator: 'Command+Q',
+      accelerator: 'CmdOrCtrl+Q',
       click: quitProgramHandler
     }
   ]},
@@ -49,12 +52,12 @@ const mainMenu = Menu.buildFromTemplate([{}, {
     submenu: [
       {
         label: 'Undo',
-        accelerator: 'Command+Z',
+        accelerator: 'CmdOrCtrl+Z',
         selector: 'undo:'
       },
       {
         label: 'Redo',
-        accelerator: 'Shift+Command+Z',
+        accelerator: 'Shift+CmdOrCtrl+Z',
         selector: 'redo:'
       },
       {
@@ -62,22 +65,22 @@ const mainMenu = Menu.buildFromTemplate([{}, {
       },
       {
         label: 'Cut',
-        accelerator: 'Command+X',
+        accelerator: 'CmdOrCtrl+X',
         selector: 'cut:'
       },
       {
         label: 'Copy',
-        accelerator: 'Command+C',
+        accelerator: 'CmdOrCtrl+C',
         selector: 'copy:'
       },
       {
         label: 'Paste',
-        accelerator: 'Command+V',
+        accelerator: 'CmdOrCtrl+V',
         selector: 'paste:'
       },
       {
         label: 'Select All',
-        accelerator: 'Command+A',
+        accelerator: 'CmdOrCtrl+A',
         selector: 'selectAll:'
       }
     ]
@@ -114,6 +117,7 @@ function saveAsFileHandler() {
 }
 
 function saveFileHandler() {
+  if (fileName === undefined) return;
   mainWindow.webContents.send('get-editor-content');
 
   ipcMain.once('editor-content', function(event, arg) {
@@ -146,8 +150,12 @@ function exportAsPdfHandler() {
                         </body>
                       </html>`;
 
+      console.log(html_body);
+
       conversion({ html: html_body }, function(err, result) {
         if (err) {
+          console.log(err);
+
           return dialog.showErrorBox('Unable to export as PDF', err);
         }
 

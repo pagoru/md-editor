@@ -150,12 +150,8 @@ function exportAsPdfHandler() {
                         </body>
                       </html>`;
 
-      console.log(html_body);
-
       conversion({ html: html_body }, function(err, result) {
         if (err) {
-          console.log(err);
-
           return dialog.showErrorBox('Unable to export as PDF', err);
         }
 

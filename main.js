@@ -10,82 +10,185 @@ const ipcMain = require('electron').ipcMain;
 const convertFactory = require('electron-html-to');
 
 let mainWindow;
+let aboutWindow;
 let fileName;
+let menuTemplate;
 
-const mainMenu = Menu.buildFromTemplate([{}, {
-  label: 'File',
-  submenu: [
+if (process.platform !== 'darwin') {
+  menuTemplate = [
     {
-      label: 'New File',
-      accelerator: 'CmdOrCtrl+N',
-      click: newFileHandler
+      label: 'File',
+      submenu: [
+        {
+          label: 'New File',
+          accelerator: 'CmdOrCtrl+N',
+          click: newFileHandler
+        },
+        {
+          label: 'Open File',
+          accelerator: 'CmdOrCtrl+O',
+          click: openFileHandler
+        },
+        {
+          label: 'Save',
+          accelerator: 'CmdOrCtrl+S',
+          click: saveFileHandler
+        },
+        {
+          label: 'Save As',
+          click: saveAsFileHandler
+        },
+        {
+          label: 'Export As PDF',
+          click: exportAsPdfHandler
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: quitProgramHandler
+        }
+      ]
     },
     {
-      label: 'Open File',
-      accelerator: 'CmdOrCtrl+O',
-      click: openFileHandler
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          selector: 'undo:'
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          selector: 'redo:'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          selector: 'cut:'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          selector: 'copy:'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          selector: 'paste:'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          selector: 'selectAll:'
+        }
+      ]
     },
     {
-      label: 'Save',
-      accelerator: 'CmdOrCtrl+S',
-      click: saveFileHandler
+      label: 'MdEditor',
+      submenu: [
+        {
+          label: 'About MdEditor',
+          click: createAboutWindow
+        }
+      ]
+    },
+  ];
+} else {
+  menuTemplate = [
+    {
+      label: 'MdEditor',
+      submenu: [
+        {
+          label: 'About MdEditor',
+          click: createAboutWindow
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: quitProgramHandler
+        }
+      ]
     },
     {
-      label: 'Save As',
-      click: saveAsFileHandler
+      label: 'File',
+      submenu: [
+        {
+          label: 'New File',
+          accelerator: 'CmdOrCtrl+N',
+          click: newFileHandler
+        },
+        {
+          label: 'Open File',
+          accelerator: 'CmdOrCtrl+O',
+          click: openFileHandler
+        },
+        {
+          label: 'Save',
+          accelerator: 'CmdOrCtrl+S',
+          click: saveFileHandler
+        },
+        {
+          label: 'Save As',
+          click: saveAsFileHandler
+        },
+        {
+          label: 'Export As PDF',
+          click: exportAsPdfHandler
+        },
+      ]
     },
     {
-      label: 'Export As PDF',
-      click: exportAsPdfHandler
-    },
-    {
-      type: 'separator'
-    },
-    {
-      label: 'Quit',
-      accelerator: 'CmdOrCtrl+Q',
-      click: quitProgramHandler
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          selector: 'undo:'
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          selector: 'redo:'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          selector: 'cut:'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          selector: 'copy:'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          selector: 'paste:'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          selector: 'selectAll:'
+        }
+      ]
     }
-  ]},
-  {
-    label: 'Edit',
-    submenu: [
-      {
-        label: 'Undo',
-        accelerator: 'CmdOrCtrl+Z',
-        selector: 'undo:'
-      },
-      {
-        label: 'Redo',
-        accelerator: 'Shift+CmdOrCtrl+Z',
-        selector: 'redo:'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: 'Cut',
-        accelerator: 'CmdOrCtrl+X',
-        selector: 'cut:'
-      },
-      {
-        label: 'Copy',
-        accelerator: 'CmdOrCtrl+C',
-        selector: 'copy:'
-      },
-      {
-        label: 'Paste',
-        accelerator: 'CmdOrCtrl+V',
-        selector: 'paste:'
-      },
-      {
-        label: 'Select All',
-        accelerator: 'CmdOrCtrl+A',
-        selector: 'selectAll:'
-      }
-    ]
-  }
-]);
+  ];
+}
+
+const mainMenu = Menu.buildFromTemplate(menuTemplate);
 
 function newFileHandler() {
   mainWindow.webContents.send('new-file');
@@ -107,7 +210,7 @@ function saveAsFileHandler() {
   mainWindow.webContents.send('get-editor-content');
 
   ipcMain.once('editor-content', function(event, arg) {
-    fileName = dialog.showSaveDialog();
+    fileName = dialog.showSaveDialog({ filters: [{ name: 'markdown', extensions: ['md'] }]});
 
     if (fileName !== undefined) {
       fs.writeFile(fileName, arg);
@@ -129,7 +232,7 @@ function exportAsPdfHandler() {
   mainWindow.webContents.send('get-output-content');
 
   ipcMain.once('output-content', function(event, arg) {
-    let pdfFileName = dialog.showSaveDialog();
+    let pdfFileName = dialog.showSaveDialog({ filters: [{ name: 'pdf', extensions: ['pdf'] }]});
 
     if (pdfFileName !== undefined) {
       let conversion = convertFactory({
@@ -167,11 +270,31 @@ function quitProgramHandler() {
 }
 
 function disableSaveMenuPosition() {
-  mainMenu.items[1].submenu.items[2].enabled = false;
+  if (process.platform !== 'darwin') {
+    mainMenu.items[0].submenu.items[2].enabled = false;
+  } else {
+    mainMenu.items[1].submenu.items[2].enabled = false;
+  }
 }
 
 function enableSaveMenuPosition() {
-  mainMenu.items[1].submenu.items[2].enabled = true;
+  if (process.platform !== 'darwin') {
+    mainMenu.items[0].submenu.items[2].enabled = true;
+  } else {
+    mainMenu.items[1].submenu.items[2].enabled = true;
+  }
+}
+
+function createAboutWindow() {
+  if (!aboutWindow) {
+    aboutWindow = new BrowserWindow({ width: 400, height: 160, "node-integration": false, frame: true,
+                                      resizable: false, "always-on-top": true });
+    aboutWindow.loadURL('file://' + __dirname + '/app/about.html');
+
+    aboutWindow.on('closed', function () {
+      aboutWindow = null;
+    });
+  }
 }
 
 function createMainWindow() {

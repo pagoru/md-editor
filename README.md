@@ -9,9 +9,12 @@ Simple markdown editor in electron.
     npm install
     npm start
 
-To create standalone packages for linux (x64) and mac OS X (x64):
+To create standalone packages for Linux (x64) and Mac OS X (x64):
 
     npm run-script build
+
+Standalone packages for Linux (x64) and Mac OS X (x64): 
+https://github.com/dbackowski/md-editor/releases
 
 ## License
 

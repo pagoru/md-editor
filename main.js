@@ -300,7 +300,7 @@ function createAboutWindow() {
 function createMainWindow() {
   mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', icon: __dirname + '/app/images/icon.png'});
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
-  //mainWindow.maximize();
+  mainWindow.maximize();
 
   disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);

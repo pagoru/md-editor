@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
-    "build": "electron-packager ./ --platform=darwin,linux --overwrite --icon=./app/images/icon --arch=x64 --version=0.37.2"
+    "build": "electron-packager ./ --platform=darwin,linux --overwrite --icon=./app/images/icon --arch=x64 --version=0.37.3"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "electron-html-to": "^2.0.2",
     "electron-packager": "^5.2.1",
-    "electron-prebuilt": "^0.37.2",
+    "electron-prebuilt": "^0.37.3",
     "jspdf": "^1.2.61"
   }
 }

@@ -7,6 +7,7 @@ Simple markdown editor in electron.
 ## Usage
 
     npm install
+    bower install
     npm start
 
 To create standalone packages for Linux (x64) and Mac OS X (x64):

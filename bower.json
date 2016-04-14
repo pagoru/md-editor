@@ -1,0 +1,24 @@
+{
+  "name": "MdEditor",
+  "description": "Simple markdown editor",
+  "main": "main.js",
+  "authors": [
+    "Damian Baćkowski"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/dbackowski/md-editor",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "highlightjs": "^9.2.0",
+    "jquery": "^2.2.3",
+    "markdown-it": "^6.0.1",
+    "codemirror": "CodeMirror#^5.13.4"
+  }
+}

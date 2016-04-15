@@ -255,7 +255,7 @@ function exportAsPdfHandler() {
 
       conversion({ html: html_body }, function(err, result) {
         if (err) {
-          return dialog.showErrorBox('Unable to export as PDF', err);
+          return dialog.showErrorBox('Unable to export as PDF', err.message);
         }
 
         result.stream.pipe(fs.createWriteStream(pdfFileName));

@@ -242,10 +242,7 @@ function exportAsPdfHandler() {
       let html_body = `<html>
                         <head>
                           <style>
-                            ${fs.readFileSync(__dirname + '/app/css/codemirror.css').toString()}
-                            ${fs.readFileSync(__dirname + '/app/css/monokai.css').toString()}
-                            ${fs.readFileSync(__dirname + '/app/css/default.css').toString()}
-                            ${fs.readFileSync(__dirname + '/app/css/design.css').toString()}
+                            ${fs.readFileSync(__dirname + '/app/css/style.css').toString()}
                           </style>
                         </head>
                         <body>
@@ -301,6 +298,7 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', icon: __dirname + '/app/images/icon.png'});
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   mainWindow.maximize();
+  //mainWindow.toggleDevTools();
 
   disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);

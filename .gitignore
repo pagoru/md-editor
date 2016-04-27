@@ -3,3 +3,5 @@ bower_components
 npm-debug.log
 MdEditor-darwin-x64
 MdEditor-linux-x64
+app/css/style.css
+app/js/bundle.js

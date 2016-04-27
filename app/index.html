@@ -1,14 +1,10 @@
 <html>
   <head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" type="text/css" href="../bower_components/codemirror/theme/monokai.css">
-    <link rel="stylesheet" type="text/css" href="../bower_components/highlightjs/styles/default.css">
-    <link rel="stylesheet" type="text/css" href="./css/design.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
   </head>
   <body>
     <div id="left">
-      <textarea id="input"># Header
+      <textarea id="input" style="display: none;"># Header
 
 This is simple text.
 
@@ -37,12 +33,5 @@ $(function(){
     </div>
     <div id="right"></div>
   </body>
-  <script type="text/javascript" src="../bower_components/markdown-it/dist/markdown-it.min.js"></script>
-  <script type="text/javascript" src="../bower_components/highlightjs/highlight.pack.min.js"></script>
-  <script type="text/javascript" src="../bower_components/codemirror/lib/codemirror.js"></script>
-  <script type="text/javascript" src="../bower_components/codemirror/addon/mode/overlay.js"></script>
-  <script type="text/javascript" src="../bower_components/codemirror/mode/javascript/javascript.js"></script>
-  <script type="text/javascript" src="../bower_components/codemirror/mode/gfm/gfm.js"></script>
-  <script type="text/javascript" src="../bower_components/codemirror/mode/markdown/markdown.js"></script>
-  <script type="text/javascript" src="./js/app.js"></script>
+  <script type="text/javascript" src="./js/bundle.js"></script>
 </html>

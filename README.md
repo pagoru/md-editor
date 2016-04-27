@@ -7,6 +7,8 @@ Simple markdown editor in electron.
 ## Usage
 
     npm install
+    npm install bower -g
+    npm install webpack -g
     bower install
     npm start
 

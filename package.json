@@ -18,7 +18,7 @@
   "devDependencies": {
     "electron-html-to": "^2.0.2",
     "electron-packager": "^7.0.0",
-    "electron-prebuilt": "^0.37.5",
+    "electron-prebuilt": "^0.37.7",
     "jspdf": "^1.2.61"
   }
 }

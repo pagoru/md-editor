@@ -10,8 +10,6 @@ module.exports = {
   "target": "atom",
   plugins: [
     new webpack.ProvidePlugin({
-      //$: "jquery",
-      //jQuery: "jquery",
       hljs: "hightlightjs",
       markdownit: "markdownit",
       CodeMirror: "codemirrorjs"
@@ -38,7 +36,6 @@ module.exports = {
   resolve: {
     modulesDirectories: ["node_modules", "bower_components"],
     alias: {
-      //jquery: "jquery/dist/jquery.js",
       hightlightjs: "highlightjs/highlight.pack.js",
       markdownit: "markdown-it/dist/markdown-it.js",
       codemirrorjs: "codemirror/lib/codemirror.js",

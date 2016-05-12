@@ -16,9 +16,12 @@
   "author": "Damian Baćkowski",
   "license": "MIT",
   "devDependencies": {
+    "codemirror": "^5.14.2",
     "electron-html-to": "^2.0.2",
     "electron-packager": "^7.0.0",
     "electron-prebuilt": "^0.37.8",
-    "jspdf": "^1.2.61"
+    "highlight.js": "^9.3.0",
+    "jspdf": "^1.2.61",
+    "markdown-it": "^6.0.1"
   }
 }

@@ -34,9 +34,9 @@ module.exports = {
     ]
   },
   resolve: {
-    modulesDirectories: ["node_modules", "bower_components"],
+    modulesDirectories: ["node_modules"],
     alias: {
-      hightlightjs: "highlightjs/highlight.pack.js",
+      hightlightjs: "highlight.js/lib/highlight.js",
       markdownit: "markdown-it/dist/markdown-it.js",
       codemirrorjs: "codemirror/lib/codemirror.js",
       codemirrorjs_overlay: "codemirror/addon/mode/overlay.js",

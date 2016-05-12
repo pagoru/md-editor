@@ -9,7 +9,6 @@ Simple markdown editor in electron.
     npm install
     npm install bower -g
     npm install webpack -g
-    bower install
     npm start
 
 To create standalone packages for Linux (x64) and Mac OS X (x64):

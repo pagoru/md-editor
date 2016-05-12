@@ -5,9 +5,9 @@ require('codemirrorjs_overlay');
 require('codemirrorjs_javascript');
 require('codemirrorjs_gfm');
 require('codemirrorjs_markdown');
-require('../bower_components/codemirror/lib/codemirror.css');
-require('../bower_components/codemirror/theme/monokai.css');
-require('../bower_components/highlightjs/styles/default.css');
+require('../node_modules/codemirror/lib/codemirror.css');
+require('../node_modules/codemirror/theme/monokai.css');
+require('../node_modules/highlight.js/styles/default.css');
 require('./design.css');
 
 var languageOverrides = {

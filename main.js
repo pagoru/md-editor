@@ -284,8 +284,10 @@ function enableSaveMenuPosition() {
 
 function createAboutWindow() {
   if (!aboutWindow) {
-    aboutWindow = new BrowserWindow({ width: 400, height: 160, "node-integration": false, frame: true,
-                                      resizable: false, "always-on-top": true });
+    aboutWindow = new BrowserWindow({ width: 400, height: 120, frame: true,
+                                      resizable: false,
+                                      webPreferences: { nodeInegration: false, alwaysOnTop: true } } );
+    aboutWindow.setMenu(null);
     aboutWindow.loadURL('file://' + __dirname + '/app/about.html');
 
     aboutWindow.on('closed', function () {
@@ -298,7 +300,6 @@ function createMainWindow() {
   mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', icon: __dirname + '/app/images/icon.png'});
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   mainWindow.maximize();
-  //mainWindow.toggleDevTools();
 
   disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);

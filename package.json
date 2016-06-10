@@ -7,7 +7,7 @@
     "prestart": "webpack",
     "start": "electron main.js",
     "prebuild": "webpack",
-    "build": "electron-packager ./ --platform=darwin,linux --overwrite --ignore=bower_components --ignore=src --ignore=node_modules/electron-packager --ignore=node_modules/electron-prebuilt --ignore=node_modules/webpack --ignore=node_modules/extract-text-webpack-plugin --ignore=node_modules/style-loader --icon=./app/images/icon --arch=x64 --version=1.2.1"
+    "build": "electron-packager ./ --platform=darwin,linux --overwrite --ignore=bower_components --ignore=src --ignore=node_modules/electron-packager --ignore=node_modules/electron-prebuilt --ignore=node_modules/webpack --ignore=node_modules/extract-text-webpack-plugin --ignore=node_modules/style-loader --icon=./app/images/icon --arch=x64 --version=1.2.2"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
     "codemirror": "^5.14.2",
     "electron-html-to": "^2.0.2",
     "electron-packager": "^7.0.0",
-    "electron-prebuilt": "^1.2.1",
+    "electron-prebuilt": "^1.2.2",
     "highlight.js": "^9.3.0",
     "jspdf": "^1.2.61",
     "markdown-it": "^6.0.1"

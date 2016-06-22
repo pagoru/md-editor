@@ -286,7 +286,7 @@ function createAboutWindow() {
   if (!aboutWindow) {
     aboutWindow = new BrowserWindow({ width: 400, height: 120, frame: true,
                                       resizable: false,
-                                      webPreferences: { nodeInegration: false, alwaysOnTop: true } } );
+                                      webPreferences: { nodeIntegration: false, alwaysOnTop: true } } );
     aboutWindow.setMenu(null);
     aboutWindow.loadURL('file://' + __dirname + '/app/about.html');
 

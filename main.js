@@ -3,10 +3,10 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const Menu = require('menu');
-const dialog = require('dialog');
+const Menu = electron.Menu;
+const dialog = electron.dialog;
 const fs = require('fs');
-const ipcMain = require('electron').ipcMain;
+const ipcMain = electron.ipcMain;
 const convertFactory = require('electron-html-to');
 
 let mainWindow;
@@ -297,7 +297,7 @@ function createAboutWindow() {
 }
 
 function createMainWindow() {
-  mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', icon: __dirname + '/app/images/icon.png'});
+  mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', webPreferences: { nodeIntegration: true }, icon: __dirname + '/app/images/icon.png'});
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
   mainWindow.maximize();
 

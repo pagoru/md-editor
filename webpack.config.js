@@ -14,20 +14,31 @@ module.exports = {
       markdownit: "markdownit",
       CodeMirror: "codemirrorjs"
     }),
-    /*new webpack.optimize.UglifyJsPlugin({
-    compress: {
+/*
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      mangle: false,
+      minimize: false,
+      compress: {
+        drop_debugger: false,
+        warnings: false,
+        drop_console: false,
         warnings: false,
         dead_code: false,
         unused: false,
         booleans: false,
         evaluate: false
-    }
-}),*/
+      }
+    }),
+*/
     new ExtractTextPlugin("./app/css/style.css", {
       allChunks: true
     })
   ],
   module: {
+    preLoaders: [
+      { test: /\.json$/, loader: 'json'},
+    ],
     loaders: [
       { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")//loader: "style!css"
       }
@@ -37,7 +48,7 @@ module.exports = {
     modulesDirectories: ["node_modules"],
     alias: {
       hightlightjs: "highlight.js/lib/highlight.js",
-      markdownit: "markdown-it/dist/markdown-it.js",
+      markdownit: "markdown-it/index.js",
       codemirrorjs: "codemirror/lib/codemirror.js",
       codemirrorjs_overlay: "codemirror/addon/mode/overlay.js",
       codemirrorjs_javascript: "codemirror/mode/javascript/javascript.js",

@@ -7,7 +7,6 @@ const Menu = electron.Menu;
 const dialog = electron.dialog;
 const fs = require('fs');
 const ipcMain = electron.ipcMain;
-const convertFactory = require('electron-html-to');
 
 let mainWindow;
 let aboutWindow;
@@ -235,28 +234,25 @@ function exportAsPdfHandler() {
     let pdfFileName = dialog.showSaveDialog({ filters: [{ name: 'pdf', extensions: ['pdf'] }]});
 
     if (pdfFileName !== undefined) {
-      let conversion = convertFactory({
-        converterPath: convertFactory.converters.PDF
-      });
+      let pdfWindow = new BrowserWindow({ show: false });
 
-      let html_body = `<html>
-                        <head>
-                          <style>
-                            ${fs.readFileSync(__dirname + '/app/css/style.css').toString()}
-                          </style>
-                        </head>
-                        <body>
-                          ${arg}
-                        </body>
-                      </html>`;
+      global.sharedObject = {
+        style: fs.readFileSync(__dirname + '/app/css/style.css').toString(),
+        body: arg
+      };
 
-      conversion({ html: html_body }, function(err, result) {
-        if (err) {
-          return dialog.showErrorBox('Unable to export as PDF', err.message);
-        }
+      pdfWindow.loadURL('file://' + __dirname + '/app/pdf.html');
 
-        result.stream.pipe(fs.createWriteStream(pdfFileName));
-        conversion.kill();
+      pdfWindow.webContents.on("did-finish-load", function() {
+        pdfWindow.webContents.printToPDF({ printBackground: true }, function(error, data) {
+          if (error) throw error;
+
+          fs.writeFile(pdfFileName, data, function(err) {
+            if (err) {
+              return dialog.showErrorBox('Unable to export as PDF', err.message);
+            }
+          })
+        })
       });
     }
   });

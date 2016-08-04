@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <style>
+    </style>
+  </head>
+  <body>
+    <script>
+      document.getElementsByTagName('style')[0].innerHTML = require('electron').remote.getGlobal('sharedObject').style;
+      document.getElementsByTagName('body')[0].innerHTML = require('electron').remote.getGlobal('sharedObject').body;
+    </script>
+  </body>
+</html>

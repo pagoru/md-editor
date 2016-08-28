@@ -14,23 +14,17 @@ module.exports = {
       markdownit: "markdownit",
       CodeMirror: "codemirrorjs"
     }),
-/*
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
       mangle: false,
-      minimize: false,
+      minimize: true,
+      sourceMap: false,
       compress: {
-        drop_debugger: false,
         warnings: false,
-        drop_console: false,
-        warnings: false,
-        dead_code: false,
-        unused: false,
-        booleans: false,
-        evaluate: false
+      },
+      output: {
+        ascii_only: true
       }
     }),
-*/
     new ExtractTextPlugin("./app/css/style.css", {
       allChunks: true
     })

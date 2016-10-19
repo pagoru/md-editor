@@ -86,3 +86,20 @@ li p:last-child { margin:0 }
 table { border-collapse: collapse; border-spacing: 0; }
 td, th { vertical-align: top; padding: 4px 10px; border: 1px solid #bbb; }
 tr:nth-child(even) td, tr:nth-child(even) th { background: #eee; }
+
+.splash img {
+  float: left;
+  margin-left: 70px;
+}
+
+.loading {
+  float: left;
+  line-height: 130px;
+  height: 130px;
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.loading:after {
+  clear: both;
+}

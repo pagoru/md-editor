@@ -8,6 +8,7 @@ const dialog = electron.dialog;
 const fs = require('fs');
 const ipcMain = electron.ipcMain;
 
+let splashScreenWindow;
 let mainWindow;
 let aboutWindow;
 let fileName;
@@ -293,9 +294,9 @@ function createAboutWindow() {
 }
 
 function createMainWindow() {
-  mainWindow = new BrowserWindow({width: 800, height: 600, title: 'MdEditor', webPreferences: { nodeIntegration: true }, icon: __dirname + '/app/images/icon.png'});
+  mainWindow = new BrowserWindow({ show: false, width: 800, height: 600, title: 'MdEditor',
+                                   webPreferences: { nodeIntegration: true }, icon: __dirname + '/app/images/icon.png' });
   mainWindow.loadURL('file://' + __dirname + '/app/index.html');
-  mainWindow.maximize();
 
   disableSaveMenuPosition();
   Menu.setApplicationMenu(mainMenu);
@@ -303,9 +304,33 @@ function createMainWindow() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+
+  mainWindow.on('ready-to-show', function() {
+    if (splashScreenWindow !== null) {
+      splashScreenWindow.close();
+    }
+    mainWindow.maximize();
+  });
 }
 
-app.on('ready', createMainWindow);
+function createSplashScreen() {
+  splashScreenWindow = new BrowserWindow({ width: 400, height: 150, resizable: false, frame: false,
+                                           webPreferences: { nodeIntegration: false, alwaysOnTop: true } });
+  splashScreenWindow.setMenu(null);
+  splashScreenWindow.loadURL('file://' + __dirname + '/app/splash.html');
+
+  splashScreenWindow.on('closed', function() {
+    splashScreenWindow = null;
+  });
+}
+
+function initializeApp() {
+  createSplashScreen();
+  createMainWindow();
+}
+
+app.on('ready', initializeApp);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {

@@ -305,7 +305,6 @@ function createMainWindow() {
     mainWindow = null;
   });
 
-
   mainWindow.on('ready-to-show', function() {
     if (splashScreenWindow !== null) {
       splashScreenWindow.close();

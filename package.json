@@ -1,6 +1,6 @@
 {
   "name": "MdEditor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Simple markdown editor",
   "main": "main.js",
   "scripts": {
@@ -18,13 +18,13 @@
   "devDependencies": {
     "codemirror": "^5.20.2",
     "css-loader": "^0.25.0",
-    "electron-packager": "8.1.0",
-    "electron": "1.4.4",
+    "electron-packager": "8.2.0",
+    "electron": "1.4.6",
     "extract-text-webpack-plugin": "^1.0.1",
-    "highlight.js": "^9.7.0",
+    "highlight.js": "^9.8.0",
     "json-loader": "^0.5.4",
-    "markdown-it": "^8.0.1",
+    "markdown-it": "^8.1.0",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.3"
   }
 }

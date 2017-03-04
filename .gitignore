@@ -5,3 +5,6 @@ MdEditor-darwin-x64
 MdEditor-linux-x64
 app/css/style.css
 app/js/bundle.js
+
+/.idea
+.idea

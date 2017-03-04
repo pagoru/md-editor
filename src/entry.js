@@ -10,12 +10,12 @@ require('../node_modules/codemirror/theme/monokai.css');
 require('../node_modules/highlight.js/styles/default.css');
 require('./design.css');
 
-var languageOverrides = {
+let languageOverrides = {
   js: 'javascript',
   html: 'xml'
 };
 
-var editor = CodeMirror.fromTextArea(document.getElementById('input'), {
+let editor = CodeMirror.fromTextArea(document.getElementById('input'), {
   mode: 'gfm',
   lineNumbers: false,
   matchBrackets: true,
@@ -24,7 +24,7 @@ var editor = CodeMirror.fromTextArea(document.getElementById('input'), {
   extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
 });
 
-var md = markdownit({
+let md = markdownit({
   html: true,
   linkify: true,
   highlight: function(code, lang){
@@ -44,8 +44,8 @@ function update(e) {
 }
 
 function markdownRender(input) {
-  var out = document.getElementById('right');
-  var old = out.cloneNode(true);
+  let out = document.getElementById('right');
+  let old = out.cloneNode(true);
   out.innerHTML = md.render(input);
 }
 
@@ -53,7 +53,7 @@ editor.on('change', update);
 
 markdownRender(document.getElementById('input').value);
 
-var electron = require('electron');
+let electron = require('electron');
 
 electron.ipcRenderer.on('new-file', function(event, message) {
   editor.setValue('');
